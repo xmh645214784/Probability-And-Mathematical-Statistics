@@ -1,0 +1,139 @@
+\documentclass[a4paper]{ctexart}
+\usepackage{ctex}
+\usepackage{amsmath}
+
+
+\graphicspath{{./figures/}}
+%首行缩进两字符 利用\indent \noindent进行控制
+\usepackage{indentfirst}
+\setlength{\parindent}{2em}
+
+%算法包
+\usepackage{caption}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+%页边距包
+\usepackage{geometry}
+\geometry {left=2.0cm ,right=2.0cm,top=2.5cm,bottom=2.5cm}
+
+%枚举
+\usepackage{enumerate}
+
+%算法input output
+\renewcommand{\algorithmicrequire}{\textbf{Input:}} % Use Input in the format of Algorithm
+\renewcommand{\algorithmicensure}{\textbf{Output:}} % Use Output in the format of Algorithm
+% for fig without caption: #1: width/size; #2: fig file
+\newcommand{\fignocaption}[2]{
+	\begin{figure}[htp]
+		\centering
+		\includegraphics[#1]{#2}
+	\end{figure}
+}
+% for fig with caption: #1: width/size; #2: fig file; #3: fig caption
+\newcommand{\fig}[3]{
+	\begin{figure}[htp]
+		\centering
+		\includegraphics[#1]{#2}
+		\caption[labelInTOC]{#3}
+	\end{figure}
+}
+%数学符号
+\usepackage{amssymb}
+\title{Probability And Mathmatical Statistics\\Homework 1}
+\author{151220131 谢旻晖}
+\date{}
+\begin{document}
+\maketitle
+\section{习题一/1}
+某人向目标射击3次，设第$i$次命中的事件为$A_i$,用$A_i$的运算表示下列事件：（1）只有第一次命中，（2）目标被命中，（3）至多命中一次，（4）至多命中两次，（5）至少命中两次
+
+\noindent 解：\\
+1.$A_{1}\bar{A_{2}}\bar{A_{3}}$\\
+2.$\cup_{i=1}^{3}A_{i}$\\
+3.$\bar{A_{2}}\bar{A_{3}}\cup\bar{A_{1}}\bar{A_{3}}\cup\bar{A_{1}}\bar{A_{2}}$\\
+4.$\overline{A_{1}A_{2}A_{3}}$\\
+5.$A_{2}A_{3}\cup A_{1}A_{3}\cup A_{1}A_{2}$
+
+\section{习题一/4}
+抛2枚骰子，以所抛数$m$,$n$为$A$的坐标，求点A(m,n)落入圆$x^2+y^2=19$内的概率。
+
+
+\noindent 解：\\
+\indent 样本点总数为所有的点数组合为$6*6=36$种。\\
+\indent 设事件$X$为点$A(m,n)$落入上述圆内，则$X$涵盖的事件样本点有11个。\\
+\[
+Pr(X)=\frac{|X|}{|\Omega|}=\frac{11}{36}
+\]
+
+\section{习题一/6}
+在50只柳丁中有3只强度太弱，如果这3只柳丁装在同一部件上，则这个部件强度就不合格，现有10个部件，每个部件装3个柳丁，若从50只柳丁中随机取用，问恰有1个部件强度不合格的概率是打算？
+
+
+\noindent 解:\\
+\indent 我们考虑柳丁是互相不同的，部件也是互相不同的。但装在同一部件上的三个柳丁不区别顺序。我们将柳丁标上号1\~50，三个坏的标为1~3，将10个部件表示为一个长度为10的list,list中的每个元素类型是一个三元集合。现在我们就将问题建模为
+\[[\{X,X,X\},\{X,X,X\},....\{X,X,X\}]\]
+用1~50往上述list中的三元集中不重复的填充，恰有一个集合是$\{1,2,3\}$的概率是多少。\\
+\indent 样本点总数为从50个数中找30个数的排列依次填入，并消去三元集合内部的重复计数，即$\frac{A_{50}^{30}}{(3!)^{10}}$
+\indent 恰有1个部件不合格为恰有一个集合为$\{1,2,3\}$的样本点个数为，首先确定一个集合是$\{1,2,3\}$,$C_{10}^1$,然后再用剩下来的47个数填入剩下的集合，有$\frac{A_{47}^{27}}{(3!)^9}$，根据乘法原则总共有$C_{10}^1 \frac{A_{47}^{27}}{(3!)^9}$.\\
+\indent 由古典概型，
+
+\begin{align*}
+&Pr(\text{恰有1个部件强度不合格})\\
+&=\frac{C_{10}^1 \frac{A_{47}^{27}}{(3!)^9}}{\frac{A_{50}^{30}}{(3!)^{10}}}\\
+&=\frac{C_{10}^{1}*3!*A_{47}^{27}}{A_{50}^{30}}\\
+&=\frac{C_{10}^1*3!*A_{50}^{30}}{50*49*48*A_{50}^{30}}\\
+&=\frac{10}{C_{50}^3}
+\end{align*}
+
+\section{习题一/12}
+平面上点$(p,q)$在$|p|\le1$,$|q|\le1$内等可能出现，求$x^2+px+q=0$有实根的概率。\\
+
+\noindent 解:\\
+样本空间$\Omega=\{(p,q)||p|\le1,|q|\le1\}$,设A为方程$x^2+px+q=0$有实根。则\\
+\[
+\Delta=p^2-4q\ge0
+\]
+\[
+q\le p^2/4
+\]
+A为图中的阴影区域，由几何概型\\
+
+\fignocaption{width=0.5\textwidth}{12.jpg}
+
+\begin{align*}
+&Pr(A)\\
+&=\frac{2+\int_{-1}^{1}\frac{p^2}{4}dp}{2*2}\\
+&=\frac{13}{24}
+\end{align*}
+
+\section{习题一/13}
+将线段$(0,2a)$任意折成3折，求此3折线能构成三角形的概率。\\
+\noindent 解:\\
+设三折的长度分别为$x$,$y$,$2a-x-y$,那么我们有约束$x,y>0$,$x+y<2a$.
+s
+则样本空间为$\Omega=\{(x,y)|x,y>0$,$x+y<2a\}$.
+
+其中能围成三角形的需要满足任意两边之和大于第三边:
+\[
+\begin{cases}
+&x+y>2a-x-y\\
+&x+2a-x-y>y\\
+&y+2a-x-y>x
+\end{cases}
+\]
+即$\{(x,y)|x+y>a,y<a,x<a\}$.那么由古典概型，
+\fignocaption{width=0.5\textwidth}{13.jpg}
+\[
+Pr(\text{3折线能构成三角形)}=\frac{1}{4}
+\]
+
+\section{补充1}
+考虑一种心形线$x^2+(y-\sqrt[3]{x^2})^2=1$(见图)，请通过蒙特卡洛法求围成的面积。
+
+\section{补充2}
+考虑抛一枚均匀的硬币$n$次,给定一正整数$k$,考虑事件$A$,出现$\log_2 {n}+k$个连续正面朝上（假定$\log_2 n$为整数）,证明
+\[
+P(A)\le 2^{-k}
+\]
+\end{document}
