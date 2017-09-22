@@ -20,6 +20,9 @@
 %枚举
 \usepackage{enumerate}
 
+%代码
+\usepackage{listings}
+
 %算法input output
 \renewcommand{\algorithmicrequire}{\textbf{Input:}} % Use Input in the format of Algorithm
 \renewcommand{\algorithmicensure}{\textbf{Output:}} % Use Output in the format of Algorithm
@@ -71,9 +74,9 @@ Pr(X)=\frac{|X|}{|\Omega|}=\frac{11}{36}
 
 
 \noindent 解:\\
-\indent 我们考虑柳丁是互相不同的，部件也是互相不同的。但装在同一部件上的三个柳丁不区别顺序。我们将柳丁标上号1\~50，三个坏的标为1~3，将10个部件表示为一个长度为10的list,list中的每个元素类型是一个三元集合。现在我们就将问题建模为
+\indent 我们考虑柳丁是互相不同的，部件也是互相不同的。但装在同一部件上的三个柳丁不区别顺序。我们将柳丁标上号为1-50，三个坏的标为1-3，将10个部件表示为一个长度为10的list,list中的每个元素类型是一个三元集合。现在我们就将问题建模为
 \[[\{X,X,X\},\{X,X,X\},....\{X,X,X\}]\]
-用1~50往上述list中的三元集中不重复的填充，恰有一个集合是$\{1,2,3\}$的概率是多少。\\
+用1-50往上述list中的三元集中不重复的填充，恰有一个集合是$\{1,2,3\}$的概率是多少。\\
 \indent 样本点总数为从50个数中找30个数的排列依次填入，并消去三元集合内部的重复计数，即$\frac{A_{50}^{30}}{(3!)^{10}}$
 \indent 恰有1个部件不合格为恰有一个集合为$\{1,2,3\}$的样本点个数为，首先确定一个集合是$\{1,2,3\}$,$C_{10}^1$,然后再用剩下来的47个数填入剩下的集合，有$\frac{A_{47}^{27}}{(3!)^9}$，根据乘法原则总共有$C_{10}^1 \frac{A_{47}^{27}}{(3!)^9}$.\\
 \indent 由古典概型，
@@ -99,7 +102,7 @@ q\le p^2/4
 \]
 A为图中的阴影区域，由几何概型\\
 
-\fignocaption{width=0.5\textwidth}{12.jpg}
+\fignocaption{width=0.3\textwidth}{12.jpg}
 
 \begin{align*}
 &Pr(A)\\
@@ -123,17 +126,62 @@ s
 \end{cases}
 \]
 即$\{(x,y)|x+y>a,y<a,x<a\}$.那么由古典概型，
-\fignocaption{width=0.5\textwidth}{13.jpg}
+\fignocaption{width=0.3\textwidth}{13.jpg}
 \[
 Pr(\text{3折线能构成三角形)}=\frac{1}{4}
 \]
 
 \section{补充1}
 考虑一种心形线$x^2+(y-\sqrt[3]{x^2})^2=1$(见图)，请通过蒙特卡洛法求围成的面积。
+\begin{lstlisting}{language=Matlab}
+clear all
+close all
+% experiment result
+count=0;            %# of samples drop inside curve
+nr_iteration=10000000;%# of iterations
+for i = 1:nr_iteration
+	temp=rand(1,2)*4-2;
+	x=temp(1);y=temp(2);
+	if(y>=x^(2/3)-sqrt(1-x^2)&& y<=x^(2/3)+sqrt(1-x^2))
+		count=count+1;
+	end
+end
+disp(['The experiment result is ',num2str(count/nr_iteration*16)]);
+\end{lstlisting}
+代码运行结果:The experiment result is 3.1422.
 
 \section{补充2}
 考虑抛一枚均匀的硬币$n$次,给定一正整数$k$,考虑事件$A$,出现$\log_2 {n}+k$个连续正面朝上（假定$\log_2 n$为整数）,证明
 \[
 P(A)\le 2^{-k}
 \]
+设$A_i$为事件第$i$次硬币起连续$\log_2 {n}+k$正面朝上的概率。
+
+显然有
+\[Pr(A_i)=\frac{1}{2^{\log_2 {n}+k}}=\frac{1}{n2^{k}}\]
+
+然后
+\[
+Pr(A)=Pr(\bigcup_{i=1}^{n}Pr(A_i))\le \sum_{i=1}^{n} \frac{1}{n2^{k}}=\frac{1}{2^k}
+\]
+
+\section{补充3}
+(非传递的骰子)考虑三枚均匀的骰子$A,B,C$，随机抛这三枚骰子，记它们的点数为$X,Y,Z$
+\begin{itemize}
+	\item 假设骰子各面的点数分别为$A:1,1,5,5,5,5$,$B:3,3,4,4,4,6$和$C:2,2,3,3,6,6$,证明$P(X>Y)=P(Y>Z)=P(Z>X)=\frac{5}{9}$.
+	\item 设计三枚骰子（点数不超过6），使得$P(X>Y),P(Y>Z),P(Z>X)$均大于$\frac{5}{9}$.
+\end{itemize}
+
+\noindent 解:\\
+\noindent(1)\\
+\indent 样本空间$\Omega=\{\text{A,B,C结果三元组}\}$，认为相同数字但在不同面是不同的，共6*6*6个样本点。\\
+很容易得到
+\[
+P(X>Y)=P(Y>Z)=P(Z>X)=\frac{4*5*6}{6*6*6}=\frac{5}{9}
+\]
+
+\noindent(2)\\
+A: 1 4 4 4 4 4\\
+B: 3 3 3 3 3 6\\
+C: 2 2 2 5 5 5
 \end{document}

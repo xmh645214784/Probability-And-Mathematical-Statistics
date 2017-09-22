@@ -1,0 +1,98 @@
+\documentclass[a4paper]{ctexart}
+\usepackage{ctex}
+\usepackage{amsmath}
+
+
+\graphicspath{{./figures/}}
+%首行缩进两字符 利用\indent \noindent进行控制
+\usepackage{indentfirst}
+\setlength{\parindent}{2em}
+
+%算法包
+\usepackage{caption}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+%页边距包
+\usepackage{geometry}
+\geometry {left=2.0cm ,right=2.0cm,top=2.5cm,bottom=2.5cm}
+
+%枚举
+\usepackage{enumerate}
+
+%代码
+\usepackage{listings}
+
+%算法input output
+\renewcommand{\algorithmicrequire}{\textbf{Input:}} % Use Input in the format of Algorithm
+\renewcommand{\algorithmicensure}{\textbf{Output:}} % Use Output in the format of Algorithm
+% for fig without caption: #1: width/size; #2: fig file
+\newcommand{\fignocaption}[2]{
+	\begin{figure}[htp]
+		\centering
+		\includegraphics[#1]{#2}
+	\end{figure}
+}
+% for fig with caption: #1: width/size; #2: fig file; #3: fig caption
+\newcommand{\fig}[3]{
+	\begin{figure}[htp]
+		\centering
+		\includegraphics[#1]{#2}
+		\caption[labelInTOC]{#3}
+	\end{figure}
+}
+%数学符号
+\usepackage{amssymb}
+\title{Probability And Mathmatical Statistics\\Homework 2}
+\author{151220131 谢旻晖}
+\date{}
+\begin{document}
+\maketitle
+\section*{习题一 15}
+\noindent
+由条件概率公式，\\
+\begin{align*}
+&\because \frac{P(AB)}{P(A)}=P(B|A)\\
+&\therefore P(AB)=\frac{1}{12}\\
+&\because \frac{P(AB)}{P(B)}=P(A|B)\\
+&\therefore P(B)=\frac{1}{6}\\
+&P(\overline{A}\ \overline{B})\\
+&=1-P(A\cup B)\\
+&=1-(P(A)+P(B)-P(AB))\\
+&=\frac{2}{3}
+\end{align*}
+
+\section*{习题一 16}
+\noindent 设事件A为从中取2件至少有一件为次品，事件B为两件都是次品，则本题需要求$P(B|A)$.\\
+\noindent 易得$P(A)=\frac{C_{4}^2+C_{6}^1*C_4^1}{C_{10}^{2}}$,$P(B)=\frac{C_{4}^2}{C_{10}^{2}}$.\\
+\noindent 由条件概率公式
+\[
+P(B|A)=\frac{P(AB)}{P(A)}
+\]
+又因为$B\subseteq A$,所以$P(AB)=P(B)$,上式可化为
+\begin{align*}
+P(B|A)&=\frac{P(B)}{P(A)}\\
+&=\frac{C_4^2}{C_4^1*C_6^1+C_4^2}\\
+&=\frac{1}{5}
+\end{align*}
+
+\section*{习题一 20}
+设事件$A_i (0\le i\le 2)$为一盒中分别有$i$只次品，由$\sum_{i=0}^{2}P(A_i)=1$,且$A_i$之间互斥，所以$A_0$,$A_1$,$A_2$构成一个完备事件组。\\
+设事件B为该盒可以出厂。\\
+(1)\\
+由全概率公式
+\begin{align*}
+&P(B)\\
+&=\sum_{i=0}^{2} P(B|A_i)P(A_i)\\
+&=0.8+\frac{C_{19}^4}{C_{20}^4}*0.1+\frac{C_{18}^4}{C_{20}^4}*0.1\\
+&=0.943
+\end{align*}
+(2)\\
+题意欲求$P(A_0|B)$.由条件概率公式.\\
+\begin{align*}
+&P(A_0|B)=\frac{P(A_0B)}{P(B)}\\
+&\because A_0 \subseteq B\\
+&\therefore P(A_0B)=P(A_0)\\
+&\therefore P(A_0|B)=\frac{P(A_0)}{P(B)}=0.848
+\end{align*}
+\end{document}
