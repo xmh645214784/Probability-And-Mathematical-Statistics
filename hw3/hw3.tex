@@ -1,0 +1,205 @@
+\documentclass[a4paper,twocolumn]{ctexart}
+\usepackage{ctex}
+\usepackage{amsmath}
+
+
+\graphicspath{{./figures/}}
+%首行缩进两字符 利用\indent \noindent进行控制
+\usepackage{indentfirst}
+\setlength{\parindent}{2em}
+
+%算法包
+\usepackage{caption}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+%页边距包
+\usepackage{geometry}
+\geometry {left=2.0cm ,right=2.0cm,top=2.5cm,bottom=2.5cm}
+
+%枚举
+\usepackage{enumerate}
+
+%代码
+\usepackage{listings}
+
+%算法input output
+\renewcommand{\algorithmicrequire}{\textbf{Input:}} % Use Input in the format of Algorithm
+\renewcommand{\algorithmicensure}{\textbf{Output:}} % Use Output in the format of Algorithm
+% for fig without caption: #1: width/size; #2: fig file
+\newcommand{\fignocaption}[2]{
+	\begin{figure}[htp]
+		\centering
+		\includegraphics[#1]{#2}
+	\end{figure}
+}
+% for fig with caption: #1: width/size; #2: fig file; #3: fig caption
+\newcommand{\fig}[3]{
+	\begin{figure}[htp]
+		\centering
+		\includegraphics[#1]{#2}
+		\caption[labelInTOC]{#3}
+	\end{figure}
+}
+%数学符号
+\usepackage{amssymb}
+\title{Probability And Mathmatical Statistics\\Homework 3}
+\author{151220131 谢旻晖}
+\date{}
+\begin{document}
+\maketitle
+\section*{习题一 36}
+设单位设立$n$条外线，则$P(\text{分机不被占线})=\sum_{i=0}^{n}\binom{100}{i}p^i(1-p)^{100-i}$,where $p=5\%$,上式大于90\%,解出最小的$n$为8.
+\section*{习题二 7}
+\noindent(1)\\
+\indent $\frac{1}{\binom{8}{4}}=1.43\%$\\
+\noindent (2)\\
+\indent 记(1)中的概率为$p$,猜对的概率为$\binom{10}{3}p^3(1-p)^{7}=0.0316\%$,概率十分小，应该确实有分辨能力。
+\section*{习题二 8}
+$X$--$P(2.5)$\\
+\noindent(1)\\
+\[
+P(X\ge4)=1-P(X\le3)=0.2424
+\]
+\noindent(2)\\
+\[
+\arg \max_{i\in \mathbb{N}}P(X=i)=2
+\]
+\[
+P(X=2)=0.2565
+\]
+\noindent(3)\\
+\[
+\arg \min_{n\in \mathbb{N}}P(X\le n)\le 90\%
+\]
+\indent 解得$n=5$
+\section*{习题二 19}
+\noindent(1)\\
+\begin{center}
+\begin{tabular}{cccccc}
+\hline
+\hline
+X&-4&-1&0&1&8\\
+P&$\frac{1}{8}$&$\frac{1}{4}$&$\frac{1}{8}$&$\frac{1}{6}$&$\frac{1}{3}$\\
+\hline
+\end{tabular}
+\end{center}
+
+\noindent(2)\\
+\begin{center}
+	\begin{tabular}{ccccc}
+		\hline
+		\hline
+		X&0&$\frac{1}{4}$&4&16\\
+		P&$\frac{1}{8}$&$\frac{5}{12}$&$\frac{1}{8}$&$\frac{1}{3}$\\
+		\hline
+	\end{tabular}
+\end{center}
+
+\noindent(3)\\
+\begin{center}
+	\begin{tabular}{cccc}
+		\hline
+		\hline
+		X&$-\frac{\sqrt{2}}{2}$&0&$\frac{\sqrt{2}}{2}$\\
+		P&$\frac{1}{4}$&$\frac{7}{12}$&$\frac{1}{6}$\\
+		\hline
+	\end{tabular}
+\end{center}
+
+\section*{习题三 3}
+\begin{align*}
+&P(X+Y=2)\\
+&=P(X=1,Y=1\cup X=2,Y=0 \cup X=3,Y=-1)\\
+&=P(X=1,Y=1)+P(X=2,Y=0)+P(X=3,Y=-1)\\
+&=\frac{1}{16}+\frac{1}{16}+\frac{1}{32}\\
+&=\frac{5}{32}
+\end{align*}
+
+\section*{2.负二项分布}
+
+\begin{align*}
+&P(X=i)\\
+&=P(\text{前i-1次出现k-1个正面,第i次是正面})\\
+&=P(\text{前i-1次出现k-1个正面})P(\text{第i次是正面})\\
+&=\binom{i-1}{k-1}p^{k-1}(1-p)^{i-k}*p\\
+&=\binom{i-1}{k-1}p^k(1-p)^{i-k}
+\end{align*}
+
+
+\section*{3.蓄水池抽样}
+\noindent 设数据流中数据的个数为$n$.\\
+\noindent (1)\\
+记事件$A_i$为第i个数据到来时发生了替换，有$P(A_i)=\frac{1}{i}$.\\
+\begin{align*}
+&P(\text{第i个数据最终留在了内存中})\\
+&=P(A_i~\overline{A_{i+1}}~\overline{A_{i+2}}\ldots\overline{A_{n}})\\
+&=\frac{1}{i}\frac{i}{i+1}\frac{i+1}{i+2}\ldots\frac{n-1}{n}\\
+&=\frac{1}{n}
+\end{align*}
+上面的推导显示出了任何一个数据最终留在内存中的概率是一样的，与在数据流中的次序无关。算法是有效的。\\
+\noindent(2)\\
+记事件$A_i$为第i个数据到来时发生了替换，有$P(A_i)=\frac{1}{2}$.\\
+\begin{align*}
+&P(\text{第i个数据最终留在了内存中})\\
+&=P(A_i~\overline{A_{i+1}}~\overline{A_{i+2}}\ldots\overline{A_{n}})\\
+&=\frac{1}{2}\frac{1}{2}\frac{1}{2}\ldots\frac{1}{2}\text{~~~(n-i+1个2)}\\
+&=\frac{1}{2^{n-i+1}}
+\end{align*}
+
+\section*{4.}
+\[
+E=\frac{6}{\pi^2}\sum_{i=1}^{\infty}\frac{1}{i}
+\]
+调和级数$\sum_{i=1}^{\infty}\frac{1}{i}$发散，所以期望不存在.
+\section*{5.}
+\indent 可以发现这样的事实，每一轮我们都从人群中剔除了一个“人”:以两种情况考虑，如果选中的是一个人的双手，那这个人自成环以后就再也不会成环，相当于这个人被剔除了；如果选中的是两个人的分别一只手，我们就将这两个人打包为一个“人”，也相当于剔除了一个人。\\
+\indent 在这种条件下，我们发现在每一轮中形成环当且仅当选中的是一个“人”的双手。\\
+\indent 定义指示器随机变量$A_i$为
+$$A_i=
+\begin{cases}
+1 &\text{第i轮选择生成了新的环}\\
+0 &\text{第i轮选择没有新的环生成}
+\end{cases}
+$$
+由上面的讨论$P(A_i=1)=\frac{n-i+1}{\binom{2n-2i+2}{2}}$,分母为从$2n-2i+2$只手中选2只牵手，分子为选到的是一个“人”的两只手。\\
+\indent 那么牵手形成环的期望值为
+\begin{align*}
+&~E\\
+&=E\left(\sum_{i=1}^{n}A_i\right)\\
+&=\sum_{i=1}^{n}E(A_i)\\
+&=\sum_{i=1}^{n}P(A_i=1)*1\\
+&=\sum_{i=1}^{n}\frac{n-i+1}{\binom{2n-2i+2}{2}}\\
+&=\sum_{i=1}^{n}\frac{1}{2n-2i+1}
+\end{align*}
+\section*{6.Jensen Inequality}
+首先证明对于下凸函数有对于任意$x_1,x_2\ldots x_n$,$p_1,p_2\ldots p_n$,$0\le p_i\le1$,且$\sum_{i=1}^{n}p_i=1$.有\\
+\[
+f(\sum_{i=1}^{n}p_ix_i)\le \sum_{i=1}^{n}p_if(x_i)
+\]
+使用数学归纳法证明，对$n$进行归纳.\\
+当$n=2$时，trivial.\\
+假设$n=k$时,有对于任意$x_1,x_2\ldots x_n$,$p_1,p_2\ldots p_k$,$0\le p_i\le1$,且$\sum_{i=1}^{k}p_i=1$.有
+\[
+f(\sum_{i=1}^{k}p_ix_i)\le \sum_{i=1}^{k}p_if(x_i)
+\]
+当$n=k+1$时,
+\begin{align*}
+&f(\sum_{i=1}^{k+1}p_ix_i)\\
+&=f\left(\left(1-p_{k+1}\right)\frac{\sum_{i=1}^{k}p_ix_i}{1-p_{k+1}}+p_{k+1}x_{k+1}\right)\\
+&\le \left(1-p_{k+1}\right)f\left(\frac{\sum_{i=1}^{k}p_ix_i}{1-p_{k+1}}\right)+p_{k+1}f\left(x_{k+1}\right)\\
+&\le(1-p_{k+1})\sum_{i=1}^{k}\frac{p_i}{1-p_{k+1}}f(x_i)+p_{k+1}f\left(x_{k+1}\right)~~~~\text{由假设}\\
+&=\sum_{i=1}^{k+1}p_if\left(x_i\right)
+\end{align*}
+归纳法证明成功。\\
+再证明命题.\\
+设X对应$n$个离散型随机变量$x_1,x_2\ldots x_n$,对应的概率分别为$p_1,p_2\ldots p_n$.由概率完备性$\sum_{i=1}^{n}p_i=1$\\
+由期望的定义$E(X)=\sum_{i=1}^{n}p_ix_i$
+\begin{align*}
+&f\left(E(X)\right)\\
+&=f\left(\sum_{i=1}^{n}p_ix_i\right)\\
+&\le \sum_{i=1}^{n}p_if\left(x_i\right)\\
+&=E\left(f(x_i)\right)
+\end{align*}
+证毕。
+\end{document}
