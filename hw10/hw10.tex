@@ -1,0 +1,125 @@
+\documentclass[a4paper,twocolumn]{ctexart}
+\usepackage{ctex}
+\usepackage{amsmath}
+
+
+\graphicspath{{./figures/}}
+%首行缩进两字符 利用\indent \noindent进行控制
+\usepackage{indentfirst}
+\setlength{\parindent}{2em}
+
+%算法包
+\usepackage{caption}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+%页边距包
+\usepackage{geometry}
+\geometry {left=2.0cm ,right=2.0cm,top=2.5cm,bottom=2.5cm}
+
+%枚举
+\usepackage{enumerate}
+
+%代码
+\usepackage{listings}
+
+%算法input output
+\renewcommand{\algorithmicrequire}{\textbf{Input:}} % Use Input in the format of Algorithm
+\renewcommand{\algorithmicensure}{\textbf{Output:}} % Use Output in the format of Algorithm
+% for fig without caption: #1: width/size; #2: fig file
+\newcommand{\fignocaption}[2]{
+	\begin{figure}[htp]
+		\centering
+		\includegraphics[#1]{#2}
+	\end{figure}
+}
+% for fig with caption: #1: width/size; #2: fig file; #3: fig caption
+\newcommand{\fig}[3]{
+	\begin{figure}[htp]
+		\centering
+		\includegraphics[#1]{#2}
+		\caption[labelInTOC]{#3}
+	\end{figure}
+}
+%数学符号
+\usepackage{amssymb}
+\title{Probability And Mathmatical Statistics\\Homework 10}
+\author{151220131 谢旻晖}
+\date{}
+\begin{document}
+\maketitle
+\section*{3}
+\noindent\textbf{矩估计}\\
+\begin{align*}
+EX&=\int_{0}^{+\infty}\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(lnx-\mu)^2}{2\sigma^2}}dx\\
+\text{令}t&=\frac{lnx-\mu}{\sqrt{2}\sigma}\\
+EX&=\int_{-\infty}^{+\infty}\frac{1}{\sqrt{2\pi}\sigma}e^{-t^2}\sqrt{2}\sigma e^{\sqrt{2}\sigma t+\mu}dt\\
+&=\frac{1}{\sqrt{\pi}}\int_{-\infty}^{+\infty}e^{-t^2+\sqrt{2}\sigma t+\mu}dt\\
+&=\frac{e^{\mu+\frac{\sigma^2}{2}}}{\sqrt{\pi}}\int_{-\infty}^{+\infty}e^{-(t-\frac{\sqrt{2}}{2}\sigma)^2}dt\\
+\text{令}u&=t-\frac{\sqrt{2}}{2}\sigma\\
+EX&=\frac{\sqrt{\pi}e^{\mu+\frac{\sigma^2}{2}}}{\sqrt{\pi}}\int_{-\infty}^{+\infty}\frac{1}{\sqrt{\pi}}e^{-u^2}du\\
+&=e^{\mu+\frac{\sigma^2}{2}}~~~~~~~~~~(\text{右边为}N(0,\frac{1}{\sqrt{2}})\text{的概率积分})\\
+EX^2&=\int_{0}^{+\infty}\frac{x}{\sqrt{2\pi}\sigma}e^{-\frac{(lnx-\mu)^2}{2\sigma^2}}dx\\
+\text{令}t&=\frac{lnx-\mu}{\sqrt{2}\sigma}\\
+&=\int_{-\infty}^{+\infty}\frac{1}{\sqrt{\pi}}e^{2\sqrt{2}\sigma t+2\mu -t^2}dt\\
+&=\int_{-\infty}^{+\infty}\frac{1}{\sqrt{\pi}}e^{-(t-\sqrt{2}\sigma)^2}e^{2\sigma^2+2\mu}dt\\
+&=\frac{e^{2\sigma^2+2\mu}}{\sqrt{\pi}}\int_{-\infty}^{+\infty}e^{-(t-\sqrt{2}\sigma)^2}dt\\
+&=e^{2\sigma^2+2\mu}
+\end{align*}
+使用样本矩代替标准矩，得
+\[
+\begin{cases}
+	\bar{X}&=e^{\mu+\frac{\sigma^2}{2}}\\
+	\frac{1}{n}\sum_{i=1}^{n} X_i^2&=e^{2\mu+2\sigma^2}
+\end{cases}
+\]
+解得
+\begin{align*}
+\hat{\mu}&=\frac{4ln\bar{X}-ln\frac{\sum_{i=1}^{n}X_i^2}{n}}{2}\\
+\hat{\sigma^2}&=ln\frac{\sum_{i=1}^{n}X_i^2}{n}-2ln\bar{X}
+\end{align*}
+\noindent\textbf{极大似然估计}\\
+似然函数为
+\begin{align*}
+L(\mu,\sigma^2)&=\Pi_{i=1}^{n}(2\pi \sigma^2)^{-\frac{1}{2}}X_i^{-1}e^{-\frac{(lnX_i-\mu)^2}{2\sigma^2}}\\
+&=(2\pi\sigma^2)^{-\frac{n}{2}}\frac{1}{\Pi_{i=1}^{n}X_i}e^{-\frac{\sum_{i=1}^{n}(lnX_i-\mu)^2}{2\sigma^2}}\\
+lnL(\mu,\sigma^2)&=-\frac{n}{2}ln(2\pi\sigma^2)+ln\frac{1}{\Pi_{i=1}^{n}X_i}-\frac{\sum_{i=1}^{n}(lnX_i-\mu)^2}{2\sigma^2}
+\end{align*}
+\[
+\begin{cases}
+\frac{\partial lnL}{\partial \sigma^2}&=-\frac{n}{2}\frac{2\pi}{2\pi\sigma^2}+\frac{\sum_{i=1}^{n}(lnX_i-\mu)^2}{2(\sigma^2)^2}=0~~~~~(1)\\
+\frac{\partial lnL}{\partial \mu}&=-\frac{\sum_{i=1}^{n}2(\mu-lnX_i)}{2\sigma^2}=0~~~~~(2)
+\end{cases}
+\]
+解得
+\begin{align*}
+\hat{\mu}&=\frac{\sum_{i=1}^{n}lnX_i}{n}\\
+\hat{\sigma^2}&=\frac{\sum_{i=1}^{n}\left[lnX_i-\sum_{j=1}^{n}\frac{lnX_j}{n}\right]}{n}
+\end{align*}
+\section*{4}
+\noindent\textbf{矩估计}\\
+
+\noindent\textbf{极大似然估计}\\
+\section*{11}
+无偏估计意味着$E[.]=\sigma^2$.\\
+\begin{align*}
+E[.]&=c\sum_{i=1}^{n-1}E(X_{i+1}-X_i)^2\\
+&=c\sum_{i=1}^{n-1}\left[D(X_{i+1}-X_i)+(E(X_{i+1}-X_i))^2\right]\\
+&=c(n-1)2\sigma^2\\
+&=\sigma^2\\
+\therefore c&=\frac{1}{2(n-1)}
+\end{align*}
+\section*{12}
+\begin{align*}
+L(\sigma^2)&=\Pi_{i=1}^{n}\frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{(X_i-\mu)^2}{2\sigma^2}}\\
+lnL(\sigma^2)&=\sum_{i=1}^{n}-\frac{(X_i-\mu)^2}{2\sigma^2}+ln\frac{1}{\sqrt{2\pi\sigma^2}}\\
+\frac{dlnL(\sigma^2)}{d\sigma^2}&=\sum_{i=1}^{n}\frac{(x-\mu)^2}{2\sigma^4}+\sqrt{2\pi \sigma^2}(-\frac{1}{2\pi\sigma^2})\frac{\sqrt{2\pi}}{2\sqrt{\sigma^2}}\\
+&=\sum_{i=1}^{n}\frac{(x-\mu)^2}{2\sigma^4}-\frac{1}{2\sigma^2}\\
+&\text{令}\frac{dlnL(\sigma^2)}{d\sigma^2}=0\\
+&\frac{\sum_{i=1}^{n}(X_i-\mu)}{2\sigma^2}=\frac{n}{2\sigma^2}\\
+\hat{\sigma^2}&=\frac{1}{n}\sum_{i=1}^{n}(X_i-\mu)^2
+\end{align*}
+\section*{13}
+\section*{14}
+\section*{18}
+\end{document}

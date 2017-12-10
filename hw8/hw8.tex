@@ -1,0 +1,152 @@
+\documentclass[a4paper,twocolumn]{ctexart}
+\usepackage{ctex}
+\usepackage{amsmath}
+
+
+\graphicspath{{./figures/}}
+%首行缩进两字符 利用\indent \noindent进行控制
+\usepackage{indentfirst}
+\setlength{\parindent}{2em}
+
+%算法包
+\usepackage{caption}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+%页边距包
+\usepackage{geometry}
+\geometry {left=2.0cm ,right=2.0cm,top=2.5cm,bottom=2.5cm}
+
+%枚举
+\usepackage{enumerate}
+
+%代码
+\usepackage{listings}
+
+%算法input output
+\renewcommand{\algorithmicrequire}{\textbf{Input:}} % Use Input in the format of Algorithm
+\renewcommand{\algorithmicensure}{\textbf{Output:}} % Use Output in the format of Algorithm
+% for fig without caption: #1: width/size; #2: fig file
+\newcommand{\fignocaption}[2]{
+	\begin{figure}[htp]
+		\centering
+		\includegraphics[#1]{#2}
+	\end{figure}
+}
+% for fig with caption: #1: width/size; #2: fig file; #3: fig caption
+\newcommand{\fig}[3]{
+	\begin{figure}[htp]
+		\centering
+		\includegraphics[#1]{#2}
+		\caption[labelInTOC]{#3}
+	\end{figure}
+}
+%数学符号
+\usepackage{amssymb}
+\title{Probability And Mathmatical Statistics\\Homework 8}
+\author{151220131 谢旻晖}
+\date{}
+\begin{document}
+\maketitle
+\section*{2.}
+\noindent 记同时工作的终端数为$X$,则$X\sim B(120,0.05)$,$EX=6$,$DX=npq=5.7$.\\
+由拉普拉斯中心极限定理，$X$近似服从$N(6,5.7)$.
+\begin{align*}
+P(X\ge 10)&=1-P(X<10)\\
+&=1-P(\frac{X-6}{\sqrt{5.7}}\le \frac{4}{\sqrt{5.7}})\\
+&=1-\Phi(1.68)\\
+&=0.04750
+\end{align*}
+\section*{4}
+\noindent\textbf{(1)}\\
+记每个舍入误差为$X_i$,$X=\sum X_i$则$EX_i=0$,$DX_i=\frac{1}{12}$.\\
+由独立同分布情形的中心极限定理，$X$近似服从$N(0,125)$.\\
+\begin{align*}
+&P(|X|\le 15)\\
+&=P(-15\le X \le 15)\\
+&=P(-\frac{3}{\sqrt{5}}\le \frac{X}{\sqrt{125}} \le \frac{3}{\sqrt{5}})\\
+&=\Phi(\frac{3}{\sqrt{5}})-\Phi(-\frac{3}{\sqrt{5}})\\
+&=2\Phi(\frac{3}{\sqrt{5}})-1\\
+&=0.8198\\
+&P(|X|\ge 15)=1-P(|X|\le 15)=0.1802
+\end{align*}
+\noindent\textbf{(2)}\\
+设最多可有$n$个数相加使得误差总和的绝对值小于10的概率不小于0.96.
+令$X=\sum_{i=1}^{n}X_i$.$EX=0$,$DX=\frac{n}{12}$.
+由中心极限定理，$X\sim^{\text{近似}}N(0,\frac{n}{12})$.
+\begin{align*}
+&P(|X|\le 10)\\
+&=P(-10\le X \le 10)\\
+&=P(-\frac{10}{\sqrt{\frac{n}{12}}} \le \frac{X}{\sqrt{\frac{n}{12}}} \le \frac{10}{\sqrt{\frac{n}{12}}})
+&=2\Phi(\frac{10}{\sqrt{\frac{n}{12}}})-1
+&> 0.96
+\end{align*}
+即$\Phi(\frac{10}{\sqrt{\frac{n}{12}}})>0.98$.查表得
+\begin{align*}
+&\frac{10}{\sqrt{\frac{n}{12}}}\ge 2.06\\
+&n\le 282.78\\
+&n \le 282
+\end{align*}
+所以最多282个数相加使得误差总和的绝对值小于10的概率不小于0.96.
+\section*{5.}
+\[
+EX_k=\int_{0}^{1}6x^2(1-x)=\frac{1}{2}
+\]
+\[
+EX_k^2=\int_{0}^{1}6x^3(1-x)=\frac{3}{10}
+\]
+\[
+DX_k=EX_k^2-(EX_k)^2=\frac{3}{10}-\frac{1}{4}=\frac{1}{20}
+\]
+\[
+\because\frac{1}{n^2}D(\sum X_k)=\frac{1}{20n}\rightarrow 0 (n \rightarrow \infty)
+\]
+$\therefore$由马尔科夫大数定理,序列\{$X_n$\}服从大数定理.
+\[
+\therefore
+\frac{1}{n}\sum_{k=1}^{n}X_k
+\overset{P}{\rightarrow}\frac{1}{n}\sum_{k=1}^{n}EX_k=\frac{1}{2}
+\]
+\section*{7.}
+\begin{align*}
+E(lnX_i)&=\int_{0}^{1}(lnx)*1 dx\\
+&=xlnx|_0^1-\int_{0}^{1}xdlnx\\
+&=-1
+\end{align*}
+因为$E(lnX_i)$有限，从而\{$lnX_i$\}服从辛钦大数定律。\\
+\begin{align*}
+&lnZ_n=\frac{1}{n}\sum_{i=1}^{n}lnX_i\overset{P}{\to}-1\\
+&\because f(x)=e^x\text{连续}\\
+&\therefore Z_n\overset{P}{\to}\frac{1}{e}
+\end{align*}
+
+\section*{补充}
+已知$g(.,.)$在$(a,b)$处连续，即有
+\[
+\forall \epsilon >0, \exists \delta >0,|x-a|<\delta,|y-b|<\delta,\text{有}|g(x,y)-g(a,b)|<\epsilon
+\]
+已知$X_n\overset{P}{\rightarrow}a$,$Y_n\overset{P}{\rightarrow}b$,所以有
+\begin{align*}
+&\forall \epsilon>0\\
+&\lim_{n \to \infty} P(|X_n-a|<\epsilon)=1\\
+&\lim_{n \to \infty} P(|Y_n-b|<\epsilon)=1\\
+&\therefore\lim_{n \to \infty} P(|X_n-a|<\epsilon,|Y_n-b|<\epsilon)=1  ~~~~~(*)
+\end{align*}
+下面证明$g(X_n,Y_n)\overset{P}{\rightarrow}g(a,b)$.取(*)式中$\epsilon=\delta$,有
+\[
+P(|X_n-a|<\delta,|Y_n-b|<\delta)=1
+\]
+\begin{align*}
+&\forall \epsilon >0\\
+&1=\lim_{n \to \infty}P(|x-a|<\delta,|y-b|<\delta)\\
+&\le
+\lim_{n \to \infty} P(|g(X_n,Y_n)-g(a,b)|<\epsilon)\text{由连续的定义}\\
+&=1
+\end{align*}
+\[
+\therefore \forall \epsilon>0 \lim_{n \to \infty} P(|g(X_n,Y_n)-g(a,b)|<\epsilon)=1
+\]
+\[
+\therefore g(X_n,Y_n)\overset{P}{\to}g(a,b)
+\]
+\end{document}

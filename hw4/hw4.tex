@@ -1,0 +1,147 @@
+\documentclass[a4paper,twocolumn]{ctexart}
+\usepackage{ctex}
+\usepackage{amsmath}
+
+
+\graphicspath{{./figures/}}
+%首行缩进两字符 利用\indent \noindent进行控制
+\usepackage{indentfirst}
+\setlength{\parindent}{2em}
+
+%算法包
+\usepackage{caption}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+%页边距包
+\usepackage{geometry}
+\geometry {left=2.0cm ,right=2.0cm,top=2.5cm,bottom=2.5cm}
+
+%枚举
+\usepackage{enumerate}
+
+%代码
+\usepackage{listings}
+
+%算法input output
+\renewcommand{\algorithmicrequire}{\textbf{Input:}} % Use Input in the format of Algorithm
+\renewcommand{\algorithmicensure}{\textbf{Output:}} % Use Output in the format of Algorithm
+% for fig without caption: #1: width/size; #2: fig file
+\newcommand{\fignocaption}[2]{
+	\begin{figure}[htp]
+		\centering
+		\includegraphics[#1]{#2}
+	\end{figure}
+}
+% for fig with caption: #1: width/size; #2: fig file; #3: fig caption
+\newcommand{\fig}[3]{
+	\begin{figure}[htp]
+		\centering
+		\includegraphics[#1]{#2}
+		\caption[labelInTOC]{#3}
+	\end{figure}
+}
+%数学符号
+\usepackage{amssymb}
+\title{Probability And Mathmatical Statistics\\Homework 4}
+\author{151220131 谢旻晖}
+\date{}
+\begin{document}
+\maketitle
+\section*{1.}
+\subsection*{a}
+\begin{align*}
+&P(X=Y)\\
+&=\sum_{k=1}^{+\infty}P(X=Y=k)\\
+&=\sum_{k=1}^{+\infty}P(X=k)P(Y=k)\\
+&=\sum_{k=1}^{+\infty}\left(\left(1-p\right)\left(1-q\right)\right)^{k-1}pq\\
+&=\frac{pq}{p+q-pq}
+\end{align*}
+\subsection*{b}
+\begin{align*}
+&P(\min\left(X,Y\right)=k)\\
+&=P(X=k,Y\ge k)+P(X>k,Y=k)\\
+&=P(X=k)P(Y\ge k)+P(X>k)P(Y=k)\\
+&=(1-p)^{k-1}p(1-q)^{k-1}+(1-p)^k(1-q)^{k-1}q\\
+&=(1-p)^{k-1}(1-q)^{k-1}(p+q-pq)
+\end{align*}
+
+\subsection*{c}
+\noindent \textit{Solution1.}\\
+由定义，先求概率$P(\max(X,Y))=k$.\\
+\begin{align*}
+&P(\max(X,Y)=k)\\
+&=P(X=k,Y\le k)+P(X<k,Y=k)\\
+&=P(X=k)P(Y\le k)+P(X<k)P(Y=k)\\
+&=P(X=k)(1-P(Y>k))+(1-P(X\ge k))P(Y=k)\\
+&=(1-p)^{k-1}p(1-(1-q)^k)+(1-q)^{k-1}q(1-(1-p)^{k-1})\\
+&=(1-p)^{k-1}p+(1-q)^{k-1}q-(p+q-pq)(1-p)^{k-1}(1-q)^{k-1}
+\end{align*}
+再求期望:
+\begin{align*}
+&E(\max(X,Y))\\
+&=\sum_{k=1}^{+\infty}kP(\max (X,Y)=k)\\
+&=\sum_{k=1}^{+\infty}k(1-p)^{k-1}p+\sum_{k=1}^{+\infty}k(1-q)^{k-1}q-\sum_{k=1}^{+\infty}(p+q-pq)(1-p)^{k-1}(1-q)^{k-1}\\
+&=\frac{1}{p}+\frac{1}{q}-\frac{1}{p+q-pq}
+\end{align*}
+\noindent \textit{Solution2.}\\
+在b.的推导中发现$k=\min(X,Y)\sim G(p+q-pq)$,因此有$E[\min(X,Y)]=(p+q-pq)^{-1}$
+\begin{align*}
+E[\max(X,Y)]&=E[X]+E[Y]-E[\min(X,Y)]\\
+&=\frac{1}{p}+\frac{1}{q}-\frac{1}{p+q-pq}
+\end{align*}
+\subsection*{d}
+\begin{align*}
+&E[X|X\le Y]\\
+&=\sum_{x=0}^{+\infty}xP(X=x|X\le Y)\\
+&=\sum_{x=0}^{+\infty}x\frac{P(X=x,X\le Y)}{P(X\le Y)}\\
+\end{align*}
+其中
+\[P(X=x,X\le Y)=(1-p)^{x-1}p(1-q)^{x-1}\]
+\begin{align*}
+&P(X\le Y)\\
+&=\sum_{k=0}^{+\infty}P(X=k,Y\ge k)\\
+&=\sum (1-p)^{k-1}p(1-q)^{k-1}\\
+&=p\sum \left((1-p)(1-q)\right)^{k-1}\\
+&=\frac{p}{p+q-pq}
+\end{align*}
+\begin{align*}
+\therefore\\
+&E[X|X\le Y]\\
+&=\sum_{x=0}^{+\infty}(p+q-pq)(1-p)^{x-1}(1-q)^{x-1}\\
+&=\frac{1}{p+q-pq}
+\end{align*}
+
+\section*{2.}
+定义随机变量X为抛到连续出现两个6所抛次数,定义两个指示器随机变量Y,Z为
+\[
+Y=
+\begin{cases}
+1&\text{第一次抛掷结果为6}\\
+0&\text{第一次抛掷结果不为6}
+\end{cases}
+\]
+\[
+Z=
+\begin{cases}
+1&\text{第二次抛掷结果为6}\\
+0&\text{第二次抛掷结果不为6}
+\end{cases}
+\]
+\begin{align*}
+&E[X]\\
+&=P(Y=0)E[X|Y=0]+P(Y=1)E(X|Y=1)\\
+&=\frac{5}{6}(1+E[X])+\frac{1}{6}E(X|Y=1)\\
+&=\frac{5}{6}(1+E[X])+\frac{1}{6}\left(P(Z=0)E[X|Y=1,Z=0]+P(Z=1)E[X|Y=1,Z=1]\right)\\
+&=\frac{5}{6}(1+E[X])+\frac{1}{6}\left(\frac{5}{6}(2+E[X])+\frac{1}{6}*2\right)
+\end{align*}
+解得
+\[
+E[X]=42
+\]
+
+\section*{3.}
+连着抛掷两次，若结果为正反，则为1；若结果为反正，则为0；若结果为正正或反反，则重新再抛两次。
+
+易见$P(generate\ 1)=P(generate\ 0)=p(1-p)$.将连续的两次绑定为整体，所需连续抛掷整体的次数服从参数为$2p(1-p)$的几何分布,$E=\frac{1}{2p(1-p)}$,再乘以2为$E=\frac{1}{p(1-p)}$
+\end{document}

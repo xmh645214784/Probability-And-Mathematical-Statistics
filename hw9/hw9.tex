@@ -1,0 +1,155 @@
+\documentclass[a4paper,twocolumn]{ctexart}
+\usepackage{ctex}
+\usepackage{amsmath}
+
+
+\graphicspath{{./figures/}}
+%首行缩进两字符 利用\indent \noindent进行控制
+\usepackage{indentfirst}
+\setlength{\parindent}{2em}
+
+%算法包
+\usepackage{caption}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+%页边距包
+\usepackage{geometry}
+\geometry {left=2.0cm ,right=2.0cm,top=2.5cm,bottom=2.5cm}
+
+%枚举
+\usepackage{enumerate}
+
+%代码
+\usepackage{listings}
+
+%算法input output
+\renewcommand{\algorithmicrequire}{\textbf{Input:}} % Use Input in the format of Algorithm
+\renewcommand{\algorithmicensure}{\textbf{Output:}} % Use Output in the format of Algorithm
+% for fig without caption: #1: width/size; #2: fig file
+\newcommand{\fignocaption}[2]{
+	\begin{figure}[htp]
+		\centering
+		\includegraphics[#1]{#2}
+	\end{figure}
+}
+% for fig with caption: #1: width/size; #2: fig file; #3: fig caption
+\newcommand{\fig}[3]{
+	\begin{figure}[htp]
+		\centering
+		\includegraphics[#1]{#2}
+		\caption[labelInTOC]{#3}
+	\end{figure}
+}
+%数学符号
+\usepackage{amssymb}
+\title{Probability And Mathmatical Statistics\\Homework 9}
+\author{151220131 谢旻晖}
+\date{}
+\begin{document}
+\maketitle
+\section*{3.}
+\noindent\textbf{(1)}\\
+\begin{align*}
+S^2&=\frac{\sum_{i=1}^{n}X_i^2}{n-1}\\
+&\frac{\sum_{i=1}^{n}(X_i-\bar{X})^2}{n-1}\\
+&=\frac{\sum_{i=1}^{n}(X_i^2-2X_i\bar{X}+\bar{X}^2)}{n-1}\\
+&=\frac{\sum_{i=1}^{n}X_i^2-2\bar{X}\sum_{i=1}^{n}X_i+n\bar{X}^2}{n-1}\\
+&=\frac{\sum_{i=1}^{n}X_i^2-2\bar{X}n\bar{X}+n\bar{X}^2}{n-1}\\
+&=\frac{1}{n-1}\left[\sum_{i=1}^{n}X_i^2-n\bar{X}^2\right]
+\end{align*}
+\noindent\textbf{(2)}\\
+\begin{align*}
+E(S^2)&=E(\frac{1}{n-1}\left[\sum_{i=1}^{n}X_i^2-n\bar{X}^2\right])\\
+&=\frac{1}{n-1}\left[\sum_{i=1}^{n}EX_i^2-nE\bar{X}^2\right]\\
+&=\frac{1}{n-1}\left[\sum_{i=1}^{n}(DX_i+(EX_i)^2)-n\left(D\bar{X}+\left(E\bar{X}\right)^2\right)\right]\\
+&=\frac{1}{n-1}\left[n(\sigma^2+\mu^2)-n\left(\frac{n\sigma^2}{n^2}+\mu^2\right)\right]\\
+&=\frac{1}{n-1}\left[(n-1)\sigma^2\right]=\sigma^2
+\end{align*}
+\section*{8.}
+\begin{align*}
+&EY\\
+&=\sum_{i=1}^{n}E\left(X_i+X_{n+i}-2\bar{X}\right)^2\\
+&=\sum_{i=1}^{n}\left[
+D\left(X_i+X_{n+i}-2\bar{X}\right)+\left(E\left(X_i+X_{n+i}-2\bar{X}\right)\right)^2
+\right]\\
+&=\sum_{i=1}^{n}\left[
+\left(2\sigma^2+4D\bar{X}-4cov(\bar{X},X_i)-4cov(\bar{X},X_{n+i})\right)
++
+0
+\right]\\
+&=\sum_{i=1}^{n}\left[
+2\sigma^2+4\frac{\sigma^2}{2n}-4\frac{DX_i}{2n}-4\frac{DX_{n+i}}{2n}
+\right]\\
+&=\sum_{i=1}^{n}\left[2\sigma^2-\frac{2\sigma^2}{n}\right]=(2n-2)\sigma^2
+\end{align*}
+\section*{9.}
+\begin{align*}
+&\frac{X_{n+1}-\bar{X}}{S}\sqrt{\frac{n}{n+1}}\\
+&=\frac{\frac{X_{n+1}-\bar{X}}{\sigma\sqrt{\frac{1+n}{n}}}}{\sqrt{\frac{\frac{(n-1)S^2}{\sigma^2}}{n-1}}}
+\end{align*}
+\begin{align*}
+\text{令}A&=\frac{X_{n+1}-\bar{X}}{\sigma\sqrt{\frac{1+n}{n}}}\\
+B&=\frac{(n-1)S^2}{\sigma^2}\\
+\text{则原式化为}&\frac{A}{\sqrt{\frac{B}{n-1}}}
+\end{align*}
+由定理$B~\sim~~\chi^2(n-1)$.A是独立的正态分布随机变量之和，仍然是正态分布，且$A~\sim~~N(0,1)$.\\
+由定理$S^2$与$\bar{X}$独立，且显然有$S^2$与$X_{n+1}$独立.所以有
+$A$与$B$独立。\\
+由t分布定义，原式服从$t(n-1)$
+\section*{10.}
+\noindent\textbf{(1)}\\
+\[
+\bar{X}~\sim~~N(12,\frac{4}{5})
+\]
+\begin{align*}
+&P(\bar{X}>13)\\
+&=P(\frac{\bar{X}-12}{\sqrt{\frac{4}{5}}}>\frac{\sqrt{5}}{2})\\
+&=1-\Phi(\frac{\sqrt{5}}{2})\\
+&=1-0.8686=0.1314
+\end{align*}
+\noindent\textbf{(2)}\\
+\begin{align*}
+&P(\underset{1\le i\le 5}{\min}X_i<10)\\
+&=1-P(\underset{1\le i\le 5}{\min}X_i\ge10)
+&=1-\Pi_{i=1}^5P(X_i\ge 10)\\
+&=1-\Pi_{i=1}^5 1-\Phi(-1)\\
+&=1-\Pi_{i=1}^5 \Phi(1)\\
+&=0.5785
+\end{align*}
+\noindent\textbf{(3)}\\
+\begin{align*}
+&P(\underset{1\le i\le 5}{\max}X_i>15)\\
+&=1-P(\underset{1\le i\le 5}{\max}X_i\le 15)
+&=1-\Pi_{i=1}^5P(X_i\le 15)\\
+&=1-\Pi_{i=1}^5\Phi(1.5)\\
+&=0.2923
+\end{align*}
+\section*{11.}
+\textbf{从答案来看$S_1^2$和$S_2^2$应该为样本修正方差，所求的也为样本修正方差，题目有误}\\
+设合并后的样本为$Z_i$,样本均值和样本修正方差为$\bar{Z}$和$S_Z^2$
+\begin{align*}
+\bar{Z}&=\frac{n_1\bar{X}+n_2\bar{Y}}{n_1+n_2}\\
+S_Z^2&=\frac{\sum_{i=1}^{n_1+n_2}Z_i^2-(n_1+n_2)\bar{Z}^2}{n_1+n_2-1}\\
+&=\frac{(n_1-1)S_1^2+n_1\bar{X}^2+(n_2-1)S_2^2+n_2\bar{Y}^2-(n_1+n_2)\bar{Z}^2}{n_1+n_2-1}\\
+&=\frac{(n_1-1)S_1^2+n_1\bar{X}^2+(n_2-1)S_2^2+n_2\bar{Y}^2-\frac{\left(n_1\bar{X}+n_2\bar{Y}\right)^2}{n_1+n_2}}{n_1+n_2-1}
+\end{align*}
+\section*{补充}
+\begin{align*}
+&\frac{(X_1+X_2)^2}{(X_1-X_2)^2}\\
+&=\frac{\frac{(X_1+X_2)^2}{2\sigma^2}}
+{\frac{(X_1-X_2)^2}{2\sigma^2}}
+\end{align*}
+\begin{align*}
+\because \frac{X_1+X_2}{\sqrt{2}\sigma}~~\sim~N(0,1)\\
+\therefore \frac{(X_1+X_2)^2}{2\sigma^2}~~\sim~\chi^2(1)\\
+\because \frac{X_1-X_2}{\sqrt{2}\sigma}~~\sim~N(0,1)\\
+\therefore \frac{(X_1-X_2)^2}{2\sigma^2}~~\sim~\chi^2(1)
+\end{align*}
+下面证明$\frac{(X_1+X_2)^2}{2\sigma^2}$和$\frac{(X_1-X_2)^2}{2\sigma^2}$独立，只要证明$X_1+X_2$和$X_1-X_2$独立,又由于他们都是多元正态分布，独立与不相关等价，只要证明:$cov(X_1+X_2,X_1-X_2)=0$即可。
+\begin{align*}
+cov(X_1+X_2,X_1-X_2)&=D(X_1)-cov(X_1,X_2)+cov(X_1,X_2)-D(X_2)\\
+&=\sigma^2-\sigma^2=0
+\end{align*}
+由F分布定义，原式子服从$F(1,1)$.
+\end{document}

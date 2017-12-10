@@ -1,0 +1,206 @@
+\documentclass[a4paper,twocolumn]{ctexart}
+\usepackage{ctex}
+\usepackage{amsmath}
+
+
+\graphicspath{{./figures/}}
+%首行缩进两字符 利用\indent \noindent进行控制
+\usepackage{indentfirst}
+\setlength{\parindent}{2em}
+
+%算法包
+\usepackage{caption}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+%页边距包
+\usepackage{geometry}
+\geometry {left=2.0cm ,right=2.0cm,top=2.5cm,bottom=2.5cm}
+
+%枚举
+\usepackage{enumerate}
+
+%代码
+\usepackage{listings}
+
+%算法input output
+\renewcommand{\algorithmicrequire}{\textbf{Input:}} % Use Input in the format of Algorithm
+\renewcommand{\algorithmicensure}{\textbf{Output:}} % Use Output in the format of Algorithm
+% for fig without caption: #1: width/size; #2: fig file
+\newcommand{\fignocaption}[2]{
+	\begin{figure}[htp]
+		\centering
+		\includegraphics[#1]{#2}
+	\end{figure}
+}
+% for fig with caption: #1: width/size; #2: fig file; #3: fig caption
+\newcommand{\fig}[3]{
+	\begin{figure}[htp]
+		\centering
+		\includegraphics[#1]{#2}
+		\caption[labelInTOC]{#3}
+	\end{figure}
+}
+%数学符号
+\usepackage{amssymb}
+\title{Probability And Mathmatical Statistics\\Homework 5}
+\author{151220131 谢旻晖}
+\date{}
+\begin{document}
+\maketitle
+
+\section*{习题四4}
+\noindent1.\\
+\begin{center}
+\begin{tabular}{cccc}
+	\hline
+	\hline
+	(U,V)&(1,1)&(2,1)&(2,2)\\
+	P&$\frac49$&$\frac49$&$\frac19$\\
+	\hline
+\end{tabular}
+\end{center}
+\noindent2.\\
+\[
+E[U]=\frac{14}{9}
+\]
+\[
+E[V]=\frac{10}{9}
+\]
+\noindent3.\\
+\begin{center}
+	\begin{tabular}{cccc}
+		\hline
+		\hline
+		UV&1&2&4\\
+		P&$\frac{4}{9}$&$\frac{4}{9}$&$\frac{1}{9}$\\
+		\hline
+	\end{tabular}
+\end{center}
+\begin{align*}
+&Cov(U,V)\\
+&=E[UV]-E[U]E[V]\\
+&=\frac{16}{9}-\frac{140}{81}\\
+&=\frac{4}{81}
+\end{align*}
+\section*{习题四19}
+两个泊松分布参数分别为1和2，由方差的公式
+\begin{align*}
+&E[X+Y]^2\\
+&=Var[X+Y]+(E[X+Y])^2\\
+&=Var[X]+Var[Y]+(E[X]+E[Y])^2\\
+&=1+2+9\\
+&=12
+\end{align*}
+\section*{习题四23}
+\[
+P(|X|\ge x)=P(f(|X|)\ge f(x))\le \frac{E[|f(X)|]}{f(x)}
+\]
+\section*{2}
+令$X_i=
+\begin{cases}
+1 &\text{第i个数为不动点}\\
+0 &\text{第i个数非不动点}
+\end{cases}
+$
+令$X$为不动点的个数,则$X=\sum_{i=1}^{n}X_i$.\\
+\begin{align*}
+E[X]&=E[\sum_{i=1}^{n}X_i]\\
+&=\sum_{i=1}^{n}E[X_i]\\
+&=\sum_{i=1}^{n}P(X_i=1)\\
+&=\sum_{i=1}^{n}\frac{1}{n}\\
+&=1
+\end{align*}
+\begin{align*}
+E[X^2]&=E[(\sum_{i=1}^{n}X_i)^2]\\
+&=E[\sum_{i,j=1}^{n}X_iX_j]\\
+&=\sum_{i,j=1}^{n}E[X_iX_j]\\
+&=\sum_{i=1}^{n}E[X_i^2]+\sum_{i\neq j}E[X_iX_j]\\
+&=1+\sum_{i\neq j}P(X_iX_j=1)\\
+&=1+\sum_{i\neq j}P(X_i=1,X_j=1)\\
+&=1+\sum_{i\neq j}\frac{1}{n(n-1)}\\
+&=1+1=2
+\end{align*}
+\begin{align*}
+Var(X)=E[X^2]-(E[X])^2=2-1=1
+\end{align*}
+\section*{3}
+设随机变量$X_i$为第i天股票的价格.由全期望公式
+\begin{align*}
+E[X_i]&=pE[X_i|\text{第$i-1$天涨}]+qE[X_i|\text{第$i-1$天跌}]\\
+&=pE[X_{i-1}*r]+qE[X_{i-1}*\frac{1}{r}]\\
+&=(pr+\frac{q}{r})E[X_{i-1}] \text{~~~~~~~~~(期望的线性性质)}
+\end{align*}
+\[
+\because E[X_1]=1
+\therefore
+E[X_d]=(pr+\frac{q}{r})^{d-1}
+\]
+\begin{align*}
+E[X_i^2]&=pE[X_i^2|\text{第$i-1$天涨}]+qE[X_i^2|\text{第$i-1$天跌}]\\
+&=pE[X_{i-1}^2*r^2]+qE[X_{i-1}^2*\frac{1}{r^2}]\\
+&=(pr^2+\frac{q}{r^2})E[X_{i-1}^2]
+\end{align*}
+\[
+\because E[X_1^2]=1
+\therefore
+E[X_d^2]=(pr^2+\frac{q}{r^2})^{d-1}
+\]
+\begin{align*}
+Var[X_d]&=E[X_d^2]-(E[X_d])^2\\
+&=(pr^2+\frac{q}{r^2})^{d-1}-(pr+\frac{q}{r})^{2d-2}
+\end{align*}
+where $q=1-p$
+\section*{4}
+\noindent \textbf{a)}
+\begin{center}
+	\begin{tabular}{ccc}
+		\hline
+		\hline
+		$Y_i$&0&1\\
+		$P$&$\frac{1}{2}$&$\frac{1}{2}$\\
+		\hline
+	\end{tabular}
+\end{center}
+\noindent\textbf{ b)}\\
+取特定的$Y_1=Y_2...Y_{\binom{n}{2}}=1$.显然有
+\[
+P(Y_1=1)P(Y_2=1)...P(Y_{\binom{2}{1}}=1)=\frac{1}{2^{\binom{n}{2}}}
+\]
+而
+\[
+P(Y_1=1\wedge Y_2=1 ...\wedge Y_n=1)=0
+\]
+说明如下：考虑$n$个随机比特中某3个$a,b,c$，若$a\oplus b=1$且$a\oplus c=1$，那么$b\oplus c=b\oplus a \oplus a \oplus c=0$.
+所以不存在所有异或生成的比特均为1的情况。\\
+因此,$
+P(Y_1=1)P(Y_2=1)...P(Y_{\binom{2}{1}}=1)\neq P(Y_1=1\wedge Y_2=1 ...\wedge Y_n=1)
+$\\
+$Y_i,i=1,2...\binom{n}{2}$并不相互独立.
+
+\noindent \textbf{c)}
+\begin{align*}
+E[Y_iY_j]&=0*P(Y_iY_j=0)+1*P(Y_iY_j=1)\\
+&=P(Y_iY_j=1)\\
+&=P(Y_i=1\wedge Y_j=1)\\
+&\overset{*}{=}P(Y_i=1)P(Y_j=1)\\
+&=E[Y_i]E[Y_j]
+\end{align*}
+其中带*号的等号作进一步说明：分两种情况.\\
+若$Y_i$和$Y_j$是由四个比特生成，则显然他们是独立的,有$P(Y_i=1\wedge Y_j=1)=P(Y_i=1)P(Y_j=1)$。\\
+若$Y_i$和$Y_j$是由三个比特生成，即他们之间使用了公共的比特，不妨设$Y_i=a\oplus b$,$Y_j=b\oplus c$.样本空间为$(a,b,c)$三元组个数，共8个，其中$Y_i=1\wedge Y_j=1$有{(0,1,0),(1,0,1)}两种，$P(Y_i=1\wedge Y_j=1)=\frac{1}{4}$.而$Y_i=1$和$Y_j=1$各4种，$P(Y_i=1)=\frac{1}{2}$,$P(Y_j=1)=\frac{1}{2}$,有$P(Y_i=1\wedge Y_j=1)=P(Y_i=1)P(Y_j=1)$。
+
+\noindent \textbf{d)}
+\begin{align*}
+Var[Y]=Var[\sum Y_i]&=\sum Var[Y_i]+2\sum_{1\le i<j\le \binom{n}{2}}Cov[Y_i,Y_j]\\
+&=\sum Var[Y_i]\\
+&=\sum E[Y_i^2]-(E[Y_i])^2\\
+&=\sum \frac{1}{4}=\frac{\binom{n}{2}}{4}
+\end{align*}
+
+\noindent\textbf{e)}
+使用切比雪夫不等式
+\[
+P(|Y-E(Y)|\ge n)\le \frac{Var[Y]}{n^2}=\frac{\binom{n}{2}}{4n^2}=\frac{n-1}{8n}
+\]
+\end{document}
