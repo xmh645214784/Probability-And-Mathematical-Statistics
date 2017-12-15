@@ -83,12 +83,13 @@ EX^2&=\int_{0}^{+\infty}\frac{x}{\sqrt{2\pi}\sigma}e^{-\frac{(lnx-\mu)^2}{2\sigm
 \begin{align*}
 L(\mu,\sigma^2)&=\Pi_{i=1}^{n}(2\pi \sigma^2)^{-\frac{1}{2}}X_i^{-1}e^{-\frac{(lnX_i-\mu)^2}{2\sigma^2}}\\
 &=(2\pi\sigma^2)^{-\frac{n}{2}}\frac{1}{\Pi_{i=1}^{n}X_i}e^{-\frac{\sum_{i=1}^{n}(lnX_i-\mu)^2}{2\sigma^2}}\\
-lnL(\mu,\sigma^2)&=-\frac{n}{2}ln(2\pi\sigma^2)+ln\frac{1}{\Pi_{i=1}^{n}X_i}-\frac{\sum_{i=1}^{n}(lnX_i-\mu)^2}{2\sigma^2}
+lnL(\mu,\sigma^2)&=-\frac{n}{2}ln(2\pi\sigma^2)+ln\frac{1}{\Pi_{i=1}^{n}X_i}\\
+&-\frac{\sum_{i=1}^{n}(lnX_i-\mu)^2}{2\sigma^2}
 \end{align*}
 \[
 \begin{cases}
-\frac{\partial lnL}{\partial \sigma^2}&=-\frac{n}{2}\frac{2\pi}{2\pi\sigma^2}+\frac{\sum_{i=1}^{n}(lnX_i-\mu)^2}{2(\sigma^2)^2}=0~~~~~(1)\\
-\frac{\partial lnL}{\partial \mu}&=-\frac{\sum_{i=1}^{n}2(\mu-lnX_i)}{2\sigma^2}=0~~~~~(2)
+\frac{\partial lnL}{\partial \sigma^2}&=-\frac{n}{2}\frac{2\pi}{2\pi\sigma^2}+\frac{\sum_{i=1}^{n}(lnX_i-\mu)^2}{2(\sigma^2)^2}=0\\
+\frac{\partial lnL}{\partial \mu}&=-\frac{\sum_{i=1}^{n}2(\mu-lnX_i)}{2\sigma^2}=0
 \end{cases}
 \]
 解得
@@ -98,8 +99,41 @@ lnL(\mu,\sigma^2)&=-\frac{n}{2}ln(2\pi\sigma^2)+ln\frac{1}{\Pi_{i=1}^{n}X_i}-\fr
 \end{align*}
 \section*{4}
 \noindent\textbf{矩估计}\\
-
+令$Y=X-\mu$.\\
+\[
+p(y;\mu,\theta)=\begin{cases}
+\frac{1}{\theta}e^{-\frac{y}{\theta}},y\ge0\\
+0~~~~~~~~O.W.
+\end{cases}
+\]
+则$Y~\sim~E(\theta)$,$EY=\theta$,$EY^2=2\theta^2$.
+\begin{align*}
+EX&=E(Y+\mu)=\theta+\mu\\
+EX^2&=E(Y+\mu)^2=2\theta^2+2\mu\theta+\mu^2\\
+\therefore\\
+\hat{\mu}&=\bar{X}-S_n\\
+\hat{\theta}&=\sqrt{EX^2-(EX)^2}\\
+&=\sqrt{\frac{1}{n}\sum X_i^2-\bar{X}^2}\\
+&=S_n
+\end{align*}
 \noindent\textbf{极大似然估计}\\
+\begin{align*}
+L(\mu,\theta)&=\Pi_{i=1}^{n}\frac{1}{\theta}e^{-\frac{X_i-\mu}{\theta}}\\
+&=\frac{1}{\theta^n}e^{\sum_{i=1}^{n}-\frac{X_i-\mu}{\theta}}\\
+lnL(\mu,\theta)&=ln\frac{1}{\theta^n}+\sum_{i=1}^{n}-\frac{X_i-\mu}{\theta}\\
+\frac{\partial lnL(\mu,\theta)}{\partial \mu}&=\frac{n}{\theta} >0\\
+\frac{\partial lnL(\mu,\theta)}{\partial \theta}&=-\frac{n}{\theta}+\sum_{i=1}^{n}\frac{X_i-\mu}{\theta^2}\\
+&=-\frac{n}{\theta}+\frac{\sum_{i=1}^{n}X_i-n\mu}{\theta^2}
+\therefore
+\end{align*}
+由于似然函数随$\mu$递增而递增，$\mu$最大为$\min_{i}X_i$.所以
+\[
+\hat{\mu}=\min_{i}X_i
+\]
+此时
+\[
+\hat{\theta}=\frac{\sum_{i=1}^{n}X_i-n\hat\mu}{n}=\bar{X}-\min_{i}X_i
+\]
 \section*{11}
 无偏估计意味着$E[.]=\sigma^2$.\\
 \begin{align*}
@@ -119,7 +153,82 @@ lnL(\sigma^2)&=\sum_{i=1}^{n}-\frac{(X_i-\mu)^2}{2\sigma^2}+ln\frac{1}{\sqrt{2\p
 &\frac{\sum_{i=1}^{n}(X_i-\mu)}{2\sigma^2}=\frac{n}{2\sigma^2}\\
 \hat{\sigma^2}&=\frac{1}{n}\sum_{i=1}^{n}(X_i-\mu)^2
 \end{align*}
+所以极大似然估计为$\hat{\sigma^2}=\frac{1}{n}\sum_{i=1}^{n}(X_i-\mu)^2$.\\
+标准正态分布的k阶原点矩为\[
+\begin{cases}
+	(k-1)!!&\text{当k为偶}\\
+	0&\text{当k为奇数}
+\end{cases}\]
+\begin{align*}
+E\hat{\sigma^2}&=E(X_i-\mu)^2\\
+&=\sigma^2E(\frac{X_i-\mu}{\sigma})^2\\
+&=\sigma^2
+\end{align*}
+\begin{align*}
+M(\hat{\sigma^2},\sigma^2)&=D(\hat{\sigma^2})+(E\hat{\sigma^2}-\sigma^2)^2\\
+&=\frac{1}{n^2}\sum_{i=1}^{n}D(X_i-\mu)^2\\
+&=\frac{1}{n}\left[E(X_i-\mu)^4-(E(X_i-\mu)^2)^2\right]\\
+&=\frac{1}{n}\sigma^4\left[E(\frac{X_i-\mu}{\sigma})^4-(E(\frac{X_i-\mu}{\sigma})^2)^2\right]\\
+&=\frac{2\sigma^4}{n}
+\end{align*}
+\begin{align*}
+&ES^2\\
+&=\frac{1}{n-1}\sum_{i=1}^{n}E(X_i-\bar{X})^2\\
+&=\frac{1}{n-1}\sum_{i=1}^{n}D(X_i-\bar{X})\\
+&=\frac{1}{n-1}\sum_{i=1}^{n}D(-\frac{1}{n}X_1......+\frac{n-1}{n}X_i-\frac{1}{n}X_{i+1}-...-\frac{1}{n}X_n)\\
+&=\frac{1}{n-1}\sum_{i=1}^{n}\frac{n-1}{n}\sigma^2\\
+&=\sigma^2\\
+\\
+\\
+&M(S^2,\sigma^2)\\
+&=E(S^2-\sigma^2)^2\\
+&=(ES^2-\sigma^2)^2+DS^2\\
+&=DS^2\\
+&\because  \frac{(n-1)S^2}{\sigma^2}~~\sim~\chi^2(n-1)\\
+&\therefore \frac{(n-1)^2}{\sigma^4}D(S^2)=D(\chi^2(n-1))=2n-2\\
+&\therefore DS^2=\frac{2\sigma^4}{n-1}\\
+&\therefore M(S^2,\sigma^2)=\frac{2\sigma^4}{n-1}\\
+\\
+\\
+&\because M(\hat{\sigma^2},\sigma^2)=\frac{2\sigma^4}{n}\\
+&~~~~M(S^2,\sigma^2)=\frac{2\sigma^4}{n-1}\\
+&\therefore M(S^2,\sigma^2)>M(\hat{\sigma^2},\sigma^2)
+\end{align*}
 \section*{13}
+\begin{align*}
+\frac{\bar{X}-\mu}{\sigma/\sqrt{n}}&~\sim N(0,1)\\
+P(Y_1\le Y\le Y_2)&=1-\alpha\\
+P(0\le Y\le Y_2)&=\frac{1-\alpha}{2}\\
+Y_2&=u_{\frac{\alpha}{2}}\\
+-\frac{u_{\frac{\alpha}{2}}\sigma}{\sqrt{n}}&\le \bar{X}-\mu\le \frac{u_{\frac{\alpha}{2}}\sigma}{\sqrt{n}}\\
+\bar{X}-\frac{u_{\frac{\alpha}{2}}\sigma}{\sqrt{n}}&\le \mu \le \bar{X}+\frac{u_{\frac{\alpha}{2}}\sigma}{\sqrt{n}}\\
+\frac{2u_{\frac{\alpha}{2}}\sigma}{\sqrt{n}}&\le L\\
+n&\ge \frac{4u_{\frac{\alpha}{2}}\sigma}{\sqrt{n}}
+\end{align*}
 \section*{14}
+\begin{align*}
+&n=9\\
+&\frac{\bar{X}-\mu}{S/\sqrt{n}}~~\sim~t(n-1)\\
+&P\{-\lambda\le \frac{\bar{X}-\mu}{S/\sqrt{n}}\le \lambda\}=95\%\\
+&\lambda=t_{0.025}=2.3060\\
+&S^2=0.33\\
+&S=0.5745\\
+&\bar{X}=6\\
+&-2.3060\le \frac{6-\mu}{0.5745/3}\le 2.3060\\
+&5.5584\le \mu\le 6.4416
+\end{align*}
+
 \section*{18}
+大样本法，当$n$足够大时，根据中心极限定理，有
+\[
+\frac{\sum_{i=1}^{n}X_i-n\mu}{\sqrt{n}\sigma}~\to~N(0,1)
+\]
+\begin{align*}
+&\frac{n\bar{X}-n\lambda}{\sqrt{n}\sqrt{\lambda}}~\to~N(0,1)\\
+&\bar{X}~\to~\lambda  \text{~~when }n~\to \infty\\
+&\frac{\bar{X}-\lambda}{\sqrt{\frac{\bar{X}}{n}}}~\to~N(0,1)\\
+&P(X_1\le \frac{\bar{X}-\lambda}{\sqrt{\frac{\bar{X}}{n}}} \le X_2)=1-\alpha\\
+&-u_{\frac{\alpha}{2}}\le\frac{\bar{X}-\lambda}{\sqrt{\frac{\bar{X}}{n}}}\le u_{\frac{\alpha}{2}}\\
+&\bar{X}-u_{\frac{\alpha}{2}}\sqrt{\frac{\bar{X}}{n}}\le \lambda\le\bar{X}+u_{\frac{\alpha}{2}}\sqrt{\frac{\bar{X}}{n}}
+\end{align*}
 \end{document}
